@@ -1,1 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatGPT StoryBook</title>
+    <style>
+        body, h1, ul, li, p {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F9F9F9;
+            color: #333;
+        }
+        #container {
+            max-width: 600px;
+            margin: 50px auto;
+        }
+        #chat-box {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            height: 400px;
+            overflow-y: auto;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .message-wrapper {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .bot-icon, .user-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+        .bot-message, .user-message {
+            font-size: 18px;
+        }
+        .bot-message {
+            color: #007BFF;
+        }
+        #user-input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="chat-box">
+            <!-- Messages will appear here -->
+        </div>
+        <input id="user-input" type="text" placeholder="Your answer here..." onkeydown="if (event.keyCode == 13) {getUserResponse();}">
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const questions = [
+            "Child’s name?",
+            "Age?",
+            "Gender: Is it He, She, or They?",
+            "What’s the theme of the book?",
+            "What's the overall message you want to achieve?",
+            `Purpose of the book: Write here different \
+             transitions like potty training, first day of \
+             class, travel, etc?`,
+            "Will the book be fiction or non-fiction?",
+            "Besides (child’s name) would you like to include other people or characters? (family members, friends, pets, loveys, etc)"
+        ];
+        let currentQuestion = 0;
+
+        function askQuestion() {
+            if (currentQuestion < questions.length) {
+                setTimeout(function() {
+                    chatBox.innerHTML += `
+                        <div class="message-wrapper">
+                            <img src="bot-icon.png" alt="Bot" class="bot-icon">
+                            <div class="bot-message">${questions[currentQuestion]}</div>
+                        </div>`;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                    currentQuestion++;
+                }, 1000);
+            }
+        }
+
+        function getUserResponse() {
+            const answer = userInput.value.trim();
+            if (answer) {
+                chatBox.innerHTML += `
+                    <div class="message-wrapper">
+                        <img src="user-icon.png" alt="User" class="user-icon">
+                        <div class="user-message">${answer}</div>
+                    </div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+                userInput.value = '';
+                askQuestion();
+            }
+        }
+
+        askQuestion();
+    </script>
+
+</body>
+</html>
 
